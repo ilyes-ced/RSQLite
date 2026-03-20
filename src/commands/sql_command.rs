@@ -1,4 +1,4 @@
-use crate::database::database::Database;
+use crate::database::Database;
 use crate::parse;
 use crate::parse::parser::{Parser, ParserError, Statement};
 #[derive(Debug)]

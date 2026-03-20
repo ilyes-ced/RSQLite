@@ -14,7 +14,6 @@ rustyline = "11.0.0"
 prettytable-rs = "0.10.0"
 rustyline-derive = "0.8.0"
 
-
 # takes binary size from 4.6mb to 500kb
 
 #[profile.release]

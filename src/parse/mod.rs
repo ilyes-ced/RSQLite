@@ -1,20 +1,18 @@
 pub mod parser;
 pub mod tokenizer;
 
-use std::fs::File;
-
 use parser::{Allocation, Clause, Statement};
 
-use crate::database::{database::Database, table::Table};
+use crate::database::{table::Table, Database};
 
 use self::parser::ColumnDef;
 
 pub fn parse(command: String, database: &mut Database) -> Result<String, String> {
-    // this bclock is returned
+    // this block is returned
     //parser::Parser::new(command);
     match parser::Parser::parse(command) {
         Ok(result) => {
-            // validate
+            // validate query
             for statement in result {
                 let gg = match statement {
                     Statement::Select {

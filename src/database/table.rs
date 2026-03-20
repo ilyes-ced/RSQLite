@@ -1,6 +1,7 @@
-use crate::parse::parser::{ColumnDef, DataType};
-
-use super::database::Database;
+use crate::{
+    database::Database,
+    parse::parser::{ColumnDef, DataType},
+};
 
 #[derive(Debug)]
 

@@ -1,0 +1,28 @@
+#V2
+fff\nfef\n;
+test;
+select\n;
+select * from test;
+create table users(\n    id_name integer auto_increment,\n    username text not_null,\n    password text not_null\n);
+create table users(\n    id integer auto_increment,\n    username text not_null,\n    password text not_null\n);\n\ninsert into users values('user1', 'password');
+create table users(\n    id integer auto_increment,\n    username text not_null,\n    password text not_null\n);
+insert;
+select;
+selecct ;
+select ;
+insert ;
+insert;
+dddd '\n;
+insert;
+insert ;
+select :\n;
+select ;
+select :\n;
+select ;
+select :\n;
+;
+select ;
+select * from test;
+select * from test; select * from table1:\n;
+select * from test;select * from table1;
+select * from users;

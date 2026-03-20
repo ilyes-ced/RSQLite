@@ -1,7 +1,8 @@
 simple sqlite clone rust
 
 https://www.sqlite.org/lang_select.html
-https://www.sqlite.org/lang_insert.html
+
+https://btree.app/
 
 ![](https://raw.githubusercontent.com/ilyes-guy/github-stats/master/generated/overview.svg#gh-dark-mode-only)
 
@@ -9,7 +10,7 @@ https://www.sqlite.org/lang_insert.html
 <img height='' src='./logos/logo.svg'>
 
 
-
+```
 ////////////////////////////////////////// database page
 page size                  2 bytes
 locked                     1 bytes
@@ -55,21 +56,19 @@ page is tables page                 1 bytes // 0
 table it belongs to                 4 bytes
 
 
-
+```
 
 
 
 ## features
-- [] terminal navigation (rustyline)
-- [] tokenizer
-- [] parser
-- [] data pagination
-- []
-- []
-- []
-- []
-- []
-- []
-- []
-- []
-- []
+- [x] terminal navigation (rustyline)
+- [x] file init
+- [x] tokenizer
+- [x] parser
+- [ ] query validation  
+  - [ ] select
+  - [ ] insert
+  - [ ] update
+  - [ ] delete
+  - [ ] drop
+- [ ] data pagination
