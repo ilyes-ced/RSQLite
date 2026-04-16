@@ -21,8 +21,6 @@ pub struct Column {
     pub nullable: bool,
 }
 
-use std::fs::{File, OpenOptions};
-
 impl Table {
     pub fn new(
         params: (String, Vec<ColumnDef>),
@@ -54,7 +52,7 @@ impl Table {
             }
             table_string.push_str(&" ");
             if col.primary_key {
-                table_string.push_str(&"primary_key");
+                table_string.push_str(&"primary key");
                 table_string.push_str(&" ");
             }
             if col.unique {
@@ -62,7 +60,7 @@ impl Table {
                 table_string.push_str(&" ");
             }
             if col.not_null {
-                table_string.push_str(&"not_null");
+                table_string.push_str(&"not null");
                 table_string.push_str(&" ");
             }
             table_string = table_string[0..table_string.len() - 1].to_string();

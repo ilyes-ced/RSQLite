@@ -77,3 +77,5 @@ Thumbs.db
 
 /target
 test.c
+test
+sqlite_test

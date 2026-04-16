@@ -2,10 +2,10 @@ use rustyline::error::ReadlineError;
 use rustyline::Editor;
 use std::{env, path::Path, process};
 
-mod btree;
 mod commands;
 mod constants;
 mod database;
+mod engine;
 mod log;
 mod parse;
 mod rustyline_config;
@@ -65,20 +65,22 @@ fn main() -> rustyline::Result<()> {
         let readline = repl.readline(&prompt);
         match readline {
             Ok(command) => {
-                let _ = repl.add_history_entry(command.as_str());
-                match process_command(&command) {
-                    CommandType::TypeSQL(cmd) => match cmd {
-                        SQLCommand::Invalid(err) => error!("an error occured: {}", err),
-                        _ => match run_sql_command(command, &mut database) {
-                            Ok(result) => info!("{}", result),
-                            Err(err) => error!("an error occured: \n{}", err),
+                if !command.is_empty() {
+                    let _ = repl.add_history_entry(command.as_str());
+                    match process_command(&command) {
+                        CommandType::TypeSQL(cmd) => match cmd {
+                            SQLCommand::Invalid(err) => error!("{}", err),
+                            _ => match run_sql_command(command, &mut database) {
+                                Ok(result) => info!("{}", result),
+                                Err(err) => error!("{}", err),
+                            },
                         },
-                    },
-                    CommandType::TypeMeta(cmd) => match run_meta_command(cmd) {
-                        Ok(result) => info!("{}", result),
-                        Err(err) => error!("an error occured: {}", err),
-                    },
-                };
+                        CommandType::TypeMeta(cmd) => match run_meta_command(cmd) {
+                            Ok(result) => info!("{}", result),
+                            Err(err) => error!("{}", err),
+                        },
+                    };
+                }
             }
             Err(ReadlineError::Interrupted) => {
                 info!("CTRL-C");

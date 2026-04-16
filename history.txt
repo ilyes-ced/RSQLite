@@ -26,3 +26,16 @@ select * from test;
 select * from test; select * from table1:\n;
 select * from test;select * from table1;
 select * from users;
+SELECT 10 - 3;
+;
+test;
+select * from test;
+d
+;
+select * from test;
+f;
+;
+CREATE TABLE users (\n    id INTEGER PRIMARY KEY,\n    name TEXT,\n    age INTEGER,\n    balance FLOAT,\n    is_active BOOLEAN\n);
+CREATE TABLE users (\n    id INTEGER PRIMARY KEY,\n    name TEXT NOT NULL,\n    age INTEGER,\n    balance FLOAT,\n    is_active BOOLEAN\n);
+CREATE TABLE users222 (\n    id INTEGER PRIMARY KEY,\n    name TEXT NOT NULL,\n    age INTEGER,\n    balance FLOAT,\n    is_active BOOLEAN\n);
+CREATE TABLE users (\n    id INTEGER PRIMARY KEY,\n    name TEXT NOT NULL,\n    age INTEGER,\n    balance FLOAT,\n    is_active BOOLEAN\n);

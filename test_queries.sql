@@ -1,11 +1,11 @@
-CREATE DATABASE test_db;
+-- CREATE DATABASE test_db;
 
 
 
 /* TABLES */
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
-    name TEXT,
+    name TEXT NOT NULL,
     age INTEGER,
     balance FLOAT,
     is_active BOOLEAN
@@ -41,6 +41,7 @@ INSERT INTO products VALUES (1, 'Laptop', 999.99, 10);
 INSERT INTO products VALUES (2, 'Mouse', 25.5, 100);
 INSERT INTO logs VALUES (1, 'System started', '2026-01-01');
 INSERT INTO logs VALUES (2, 'User login', '2026-01-02');
+
 
 
 /* SELECT */

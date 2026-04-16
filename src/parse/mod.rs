@@ -37,7 +37,7 @@ pub fn parse(command: String, database: &mut Database) -> Result<String, String>
                         selection,
                     } => validate_delete((table_name, selection), database),
                     Statement::CreateTable { name, columns } => {
-                        validate_create((name, columns), database)
+                        validate_create_table((name, columns), database)
                     }
                     Statement::Drop { object_type, names } => {
                         validate_drop((object_type, names), database)
@@ -60,10 +60,11 @@ pub fn parse(command: String, database: &mut Database) -> Result<String, String>
     Ok("result".to_string())
 }
 
-fn validate_create(
+fn validate_create_table(
     params: (String, Vec<ColumnDef>),
     database: &mut Database,
 ) -> Result<String, String> {
+    //? make sure the table is not already created
     match database.has_table(&params.0) {
         true => Err(String::from("table already exists")),
         false => {
@@ -112,12 +113,7 @@ fn validate_insert(
             println!("{:?}", table);
             println!("{:?}", params);
 
-            //                                                           _   _       _           _     _                        _____    ___    ____     ___
-            //    __ _   _   _    ___   _ __   _   _    __   __   __ _  | | (_)   __| |   __ _  | |_  (_)   ___    _ __        |_   _|  / _ \  |  _ \   / _ \
-            //   / _` | | | | |  / _ \ | '__| | | | |   \ \ / /  / _` | | | | |  / _` |  / _` | | __| | |  / _ \  | '_ \         | |   | | | | | | | | | | | |
-            //  | (_| | | |_| | |  __/ | |    | |_| |    \ V /  | (_| | | | | | | (_| | | (_| | | |_  | | | (_) | | | | |        | |   | |_| | | |_| | | |_| |
-            //   \__, |  \__,_|  \___| |_|     \__, |     \_/    \__,_| |_| |_|  \__,_|  \__,_|  \__| |_|  \___/  |_| |_|        |_|    \___/  |____/   \___/
-            //      |_|                        |___/
+            // TODO: quesry validation too
 
             let mut values: Vec<String> = Vec::new();
 

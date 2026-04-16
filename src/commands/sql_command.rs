@@ -3,12 +3,12 @@ use crate::parse;
 use crate::parse::parser::{Parser, ParserError, Statement};
 #[derive(Debug)]
 pub enum SQLCommand {
-    Insert(String),
-    Select(String),
-    Create(String),
-    Update(String),
-    Delete(String),
-    Drop(String),
+    Insert,
+    Select,
+    Create,
+    Update,
+    Delete,
+    Drop,
     Invalid(String),
 }
 
@@ -18,13 +18,13 @@ impl SQLCommand {
         let cmd = args[0].to_owned().to_lowercase();
 
         match cmd.as_ref() {
-            "insert" => SQLCommand::Insert(command),
-            "select" => SQLCommand::Select(command),
-            "create" => SQLCommand::Create(command),
-            "update" => SQLCommand::Update(command),
-            "delete" => SQLCommand::Delete(command),
-            "drop" => SQLCommand::Drop(command),
-            _ => SQLCommand::Invalid("invalid query type".to_string()),
+            "insert" => SQLCommand::Insert,
+            "select" => SQLCommand::Select,
+            "create" => SQLCommand::Create,
+            "update" => SQLCommand::Update,
+            "delete" => SQLCommand::Delete,
+            "drop" => SQLCommand::Drop,
+            _ => SQLCommand::Invalid(format!("invalid query type: {}", cmd)),
         }
     }
 }

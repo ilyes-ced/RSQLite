@@ -67,8 +67,16 @@ table it belongs to                 4 bytes
 - [x] parser
 - [ ] query validation  
   - [ ] select
+    - [ ] check table exists
+    - [ ] check selected columns exist
   - [ ] insert
   - [ ] update
   - [ ] delete
   - [ ] drop
 - [ ] data pagination
+
+
+
+
+
+

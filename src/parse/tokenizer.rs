@@ -1,4 +1,6 @@
 use std::{fmt, iter::Peekable, str::Chars};
+
+use crate::info;
 #[derive(Debug, PartialEq, Clone)]
 pub enum KeyWord {
     Select,
@@ -32,9 +34,9 @@ pub enum KeyWord {
     Sum,
     Max,
     Min,
-    NotNull,
     AutoIncrement,
-    PrimaryKey,
+    Primary,
+    Key,
     Unique,
     NotAKeyword,
 }
@@ -231,9 +233,10 @@ impl<'a> Tokenizer<'a> {
                     '-' => {
                         chars.next();
                         match chars.peek() {
-                            Some(' ') => self.consume_and_return(chars, Token::Minus),
-                            Some('\t') => self.consume_and_return(chars, Token::Minus),
-                            Some('\n') => self.consume_and_return(chars, Token::Minus),
+                            Some(' ') | Some('\t') | Some('\n') => {
+                                self.consume_and_return(chars, Token::Minus)
+                            }
+
                             _ => {
                                 let word: Word = self.tokenize_word(chars);
                                 match self.is_number(&word) {
@@ -346,7 +349,7 @@ impl<'a> Tokenizer<'a> {
             }
         }
 
-        let word: Word = match s.as_str() {
+        let word: Word = match s.to_lowercase().as_str() {
             "select" => Word {
                 value: s,
                 keyword: KeyWord::Select,
@@ -471,17 +474,17 @@ impl<'a> Tokenizer<'a> {
                 value: s,
                 keyword: KeyWord::Min,
             },
-            "not_null" => Word {
-                value: s,
-                keyword: KeyWord::NotNull,
-            },
             "auto_increment" => Word {
                 value: s,
                 keyword: KeyWord::AutoIncrement,
             },
-            "primary_key" => Word {
+            "primary" => Word {
                 value: s,
-                keyword: KeyWord::PrimaryKey,
+                keyword: KeyWord::Primary,
+            },
+            "key" => Word {
+                value: s,
+                keyword: KeyWord::Key,
             },
             "unique" => Word {
                 value: s,

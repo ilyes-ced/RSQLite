@@ -34,9 +34,11 @@ impl Hinter for REPLHelper {
 
 impl Validator for REPLHelper {
     fn validate(&self, ctx: &mut ValidationContext) -> Result<ValidationResult, ReadlineError> {
-        use ValidationResult::{Incomplete, /*Invalid,*/ Valid};
+        use ValidationResult::{Incomplete, Valid};
         let input = ctx.input();
         let result = if input.starts_with(".") {
+            Valid(None)
+        } else if input.is_empty() {
             Valid(None)
         } else if !input.ends_with(';') {
             Incomplete

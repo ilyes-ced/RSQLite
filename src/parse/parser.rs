@@ -36,7 +36,7 @@ pub enum Clause {
         right: Box<Clause>,
     },
     Value(String),
-    // box needed to avoid infinite nesting
+    // box needed to avoid infinite nesting error from rust
     Nested(Box<Clause>),
 }
 
@@ -153,7 +153,7 @@ impl Parser /*<'a>*/ {
                 Token::LParen => {
                     cols = self.get_words_in_paren()?;
                 }
-                _ => return Err(self.return_error("columns are req")),
+                _ => return Err(self.return_error("columns are required")),
             },
         }
 
@@ -397,13 +397,41 @@ impl Parser /*<'a>*/ {
                         break;
                     }
                     Token::Word(Word {
-                        keyword: KeyWord::PrimaryKey,
+                        keyword: KeyWord::Primary,
                         ..
-                    }) => column.primary_key = true,
+                    }) => {
+                        self.next_token();
+                        match self.tokens[self.index] {
+                            Token::Word(Word {
+                                keyword: KeyWord::Key,
+                                ..
+                            }) => column.primary_key = true,
+                            _ => {
+                                // throw error
+                                return Err(self.return_error("still dont know what to do here (in case of primary, theres nothing you can add after it other than key)"));
+                            }
+                        }
+                    }
                     Token::Word(Word {
-                        keyword: KeyWord::NotNull,
+                        keyword: KeyWord::Not,
                         ..
-                    }) => column.not_null = true,
+                    }) => {
+                        {
+                            self.next_token();
+                            match self.tokens[self.index] {
+                                Token::Word(Word {
+                                    keyword: KeyWord::Null,
+                                    ..
+                                }) => column.not_null = true,
+                                _ => {
+                                    // throw error
+                                    return Err(
+                                        self.return_error("still dont know what to do here (for not theres is other stuff you can add after it like in where clauses to exclude values)")
+                                    );
+                                }
+                            }
+                        }
+                    }
                     Token::Word(Word {
                         keyword: KeyWord::AutoIncrement,
                         ..
@@ -476,6 +504,7 @@ impl Parser /*<'a>*/ {
                             _ => return Err(self.return_error("default value not closed")),
                         }
                     }
+                    Token::RParen => break,
                     _ => {
                         return Err(self.return_error(&format!(
                             "invalid column option {}",
